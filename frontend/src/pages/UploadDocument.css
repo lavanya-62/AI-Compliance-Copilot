@@ -1,0 +1,149 @@
+
+.upload-btn {
+  margin-top: 20px;
+  padding: 12px 30px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.upload-btn:hover {
+  background: #1d4ed8;
+}
+
+.upload-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.upload-message {
+  width: 700px;
+  margin: 25px auto;
+  padding: 15px;
+  background: white;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}.analysis-card{
+
+    width:700px;
+
+    margin:40px auto;
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.1);
+}
+
+.analysis-card h2{
+
+    color:#2563eb;
+}
+
+.analysis-card ul{
+
+    text-align:left;
+
+    line-height:35px;
+}
+
+.report-btn{
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    padding:15px 30px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:17px;
+
+    margin-top:20px;
+}
+
+.report-btn:hover{
+
+    background:#1d4ed8;
+}
+
+.upload-page{
+    padding:40px;
+}
+
+.upload-page h1{
+    font-size:34px;
+    color:#1f2937;
+}
+
+.subtitle{
+    color:#6b7280;
+    margin-bottom:30px;
+}
+
+.upload-box{
+
+    width:700px;
+    height:350px;
+
+    margin:auto;
+
+    border:3px dashed #2563eb;
+
+    border-radius:20px;
+
+    display:flex;
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#f8fbff;
+
+    transition:.3s;
+}
+
+.upload-box:hover{
+
+    background:#eef5ff;
+}
+
+.upload-icon{
+
+    font-size:70px;
+
+    margin-bottom:20px;
+}
+
+.upload-box h2{
+
+    color:#2563eb;
+
+    margin-bottom:10px;
+}
+
+.upload-box input{
+
+    margin-top:20px;
+}
+
+.supported{
+
+    margin-top:20px;
+
+    color:gray;
+
+    text-align:center;
+}

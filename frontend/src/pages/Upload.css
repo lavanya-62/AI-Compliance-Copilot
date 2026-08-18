@@ -1,0 +1,116 @@
+.selected-file {
+  margin-top: 18px;
+  padding: 12px;
+  background: #eef4ff;
+  border-radius: 8px;
+  color: #1e40af;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.upload-button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.upload-message {
+  margin-top: 20px;
+  font-weight: 600;
+  color: #15803d;
+}
+.upload-page {
+  min-height: 100vh;
+  padding: 40px;
+  background: #f4f7fc;
+}
+
+.upload-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.upload-header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.upload-header h1 {
+  margin: 0;
+  color: #23428f;
+  font-size: 38px;
+}
+
+.upload-header p {
+  margin-top: 10px;
+  color: #64748b;
+  font-size: 18px;
+}
+
+/* Upload Card */
+.upload-card {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.upload-card h2 {
+  margin-top: 0;
+  color: #1e293b;
+  font-size: 26px;
+}
+
+.upload-icon {
+  font-size: 50px;
+  margin: 20px 0;
+}
+
+/* Drop Area */
+.drop-area {
+  border: 2px dashed #2864e6;
+  border-radius: 12px;
+  padding: 45px 20px;
+  margin-top: 25px;
+  background: #f8faff;
+  transition: 0.3s;
+}
+
+.drop-area:hover {
+  background: #eef4ff;
+}
+
+.drop-area p {
+  color: #64748b;
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+/* File input */
+.file-input {
+  margin-top: 15px;
+}
+
+/* Upload button */
+.upload-button {
+  margin-top: 25px;
+  padding: 13px 30px;
+  border: none;
+  border-radius: 8px;
+  background: #2864e6;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.upload-button:hover {
+  background: #1d4ed8;
+}
+
+/* Supported files */
+.supported-files {
+  margin-top: 20px;
+  color: #64748b;
+  font-size: 14px;
+}
