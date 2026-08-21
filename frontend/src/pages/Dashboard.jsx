@@ -7,6 +7,8 @@ function Dashboard() {
 
   const userId = localStorage.getItem("userId");
 
+  const API_URL = "https://ai-compliance-copilot-pfq8.onrender.com";
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -20,7 +22,7 @@ function Dashboard() {
       }
 
       const response = await fetch(
-        `http://localhost:5000/reports/dashboard/${userId}`
+        `${API_URL}/reports/dashboard/${userId}`
       );
 
       if (!response.ok) {
@@ -64,7 +66,10 @@ function Dashboard() {
         <div className="dashboard-header">
           <div>
             <h1>Dashboard</h1>
-            <p>Welcome to your AI Compliance Dashboard</p>
+
+            <p>
+              Welcome to your AI Compliance Dashboard
+            </p>
           </div>
 
           <div className="welcome">
@@ -79,29 +84,49 @@ function Dashboard() {
 
           <div className="stat-card">
             <p>Compliance Score</p>
+
             <h3>0%</h3>
-            <span>No document analyzed yet</span>
+
+            <span>
+              No document analyzed yet
+            </span>
           </div>
+
 
           <div className="stat-card">
             <p>Risk Level</p>
+
             <h3>No Data</h3>
-            <span>Upload a document to analyze</span>
+
+            <span>
+              Upload a document to analyze
+            </span>
           </div>
+
 
           <div className="stat-card">
             <p>Documents Checked</p>
+
             <h3>0</h3>
-            <span>AI analyzed documents</span>
+
+            <span>
+              AI analyzed documents
+            </span>
           </div>
+
 
           <div className="stat-card">
             <p>Issues Found</p>
+
             <h3>0</h3>
-            <span>No issues detected</span>
+
+            <span>
+              No issues detected
+            </span>
           </div>
 
         </div>
+
 
         {/* Risk Breakdown */}
         <div className="dashboard-section">
@@ -111,47 +136,65 @@ function Dashboard() {
           <div className="risk-grid">
 
             <div className="risk-card high">
-             <strong>
-              🔴High-Severity Issues: {highRisk}
+
+              <strong>
+                🔴 High Risk: 0
               </strong>
+
               <p>
-                Individual findings classified as high severity.
-                </p>
+                High-severity compliance issues detected.
+              </p>
+
             </div>
+
 
             <div className="risk-card medium">
-            <strong>
-               🟠 Medium-Severity Issues: {mediumRisk}
-               </strong>
-               <p>
-                Individual findings classified as medium severity.
-                </p>
+
+              <strong>
+                🟠 Medium Risk: 0
+              </strong>
+
+              <p>
+                Medium-severity issues that need attention.
+              </p>
+
             </div>
 
+
             <div className="risk-card low">
+
               <strong>
-                🟢 Low-Severity Issues: {lowRisk}
-                </strong>
-                <p>
-                  Individual findings classified as low severity.
-                  </p>
+                🟢 Low Risk: 0
+              </strong>
+
+              <p>
+                Low-severity compliance issues detected.
+              </p>
+
             </div>
 
           </div>
 
         </div>
 
+
         {/* Recent Activity */}
         <div className="dashboard-section">
 
-          <h2>Recent Compliance Activity</h2>
+          <h2>
+            Recent Compliance Activity
+          </h2>
 
           <div className="activity">
-            <strong>📄 No documents analyzed</strong>
+
+            <strong>
+              📄 No documents analyzed
+            </strong>
 
             <p>
               Upload a compliance document to get started.
             </p>
+
           </div>
 
         </div>
@@ -160,13 +203,15 @@ function Dashboard() {
     );
   }
 
+
   // ==============================
   // LATEST DOCUMENT DATA
   // ==============================
 
   const document = data.latestDocument;
 
-  const score = Number(data.complianceScore) || 0;
+  const score =
+    Number(data.complianceScore) || 0;
 
   const documentsChecked =
     Number(data.documentsChecked) || 0;
@@ -186,6 +231,7 @@ function Dashboard() {
   const riskLevel =
     data.riskLevel || "No Data";
 
+
   // ==============================
   // DASHBOARD
   // ==============================
@@ -198,11 +244,15 @@ function Dashboard() {
       <div className="dashboard-header">
 
         <div>
-          <h1>Dashboard</h1>
+
+          <h1>
+            Dashboard
+          </h1>
 
           <p>
             Welcome to your AI Compliance Dashboard
           </p>
+
         </div>
 
         <div className="welcome">
@@ -214,7 +264,10 @@ function Dashboard() {
 
       {/* ================= OVERVIEW ================= */}
 
-      <h2>AI Compliance Overview</h2>
+      <h2>
+        AI Compliance Overview
+      </h2>
+
 
       <div className="stats-grid">
 
@@ -222,7 +275,9 @@ function Dashboard() {
 
         <div className="stat-card">
 
-          <p>Compliance Score</p>
+          <p>
+            Compliance Score
+          </p>
 
           <h3>
             {score}%
@@ -239,7 +294,9 @@ function Dashboard() {
 
         <div className="stat-card">
 
-          <p>Risk Level</p>
+          <p>
+            Risk Level
+          </p>
 
           <h3 className="medium">
             {riskLevel}
@@ -256,7 +313,9 @@ function Dashboard() {
 
         <div className="stat-card">
 
-          <p>Documents Checked</p>
+          <p>
+            Documents Checked
+          </p>
 
           <h3>
             {documentsChecked}
@@ -273,7 +332,9 @@ function Dashboard() {
 
         <div className="stat-card">
 
-          <p>Issues Found</p>
+          <p>
+            Issues Found
+          </p>
 
           <h3>
             {totalFindings}
@@ -292,7 +353,9 @@ function Dashboard() {
 
       <div className="dashboard-section">
 
-        <h2>Risk Breakdown</h2>
+        <h2>
+          Risk Breakdown
+        </h2>
 
         <div className="risk-grid">
 
@@ -349,7 +412,9 @@ function Dashboard() {
 
       <div className="dashboard-section">
 
-        <h2>Recent Compliance Activity</h2>
+        <h2>
+          Recent Compliance Activity
+        </h2>
 
 
         {/* Document */}
@@ -389,24 +454,26 @@ function Dashboard() {
           data.findings.length > 0 && (
             <>
 
-              {data.findings.map((finding, index) => (
+              {data.findings.map(
+                (finding, index) => (
 
-                <div
-                  className="activity warning"
-                  key={index}
-                >
+                  <div
+                    className="activity warning"
+                    key={index}
+                  >
 
-                  <strong>
-                    ⚠ {finding.issue}
-                  </strong>
+                    <strong>
+                      ⚠ {finding.issue}
+                    </strong>
 
-                  <p>
-                    {finding.recommendation}
-                  </p>
+                    <p>
+                      {finding.recommendation}
+                    </p>
 
-                </div>
+                  </div>
 
-              ))}
+                )
+              )}
 
             </>
           )}
