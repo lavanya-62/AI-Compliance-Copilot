@@ -10,28 +10,42 @@ function Login() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const API_URL =
+    "https://ai-compliance-copilot-pfq8.onrender.com";
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
     // Clear previous message
     setMessage("");
 
-    // Validation
+    // ==============================
+    // VALIDATION
+    // ==============================
+
     if (!email.trim() || !password.trim()) {
-      setMessage("⚠️ Please enter email and password.");
+      setMessage(
+        "⚠️ Please enter email and password."
+      );
       return;
     }
 
     try {
       setLoading(true);
 
+      // ==============================
+      // LOGIN API
+      // ==============================
+
       const response = await fetch(
-        "http://localhost:5000/auth/login",
+        `${API_URL}/auth/login`,
         {
           method: "POST",
+
           headers: {
             "Content-Type": "application/json",
           },
+
           body: JSON.stringify({
             email: email.trim(),
             password,
@@ -41,16 +55,26 @@ function Login() {
 
       const data = await response.json();
 
-      console.log("Login response:", data);
+      console.log(
+        "Login response:",
+        data
+      );
 
-      // Login failed
+      // ==============================
+      // LOGIN FAILED
+      // ==============================
+
       if (!response.ok) {
         throw new Error(
-          data.message || "Invalid email or password."
+          data.message ||
+            "Invalid email or password."
         );
       }
 
-      // Check user data
+      // ==============================
+      // CHECK USER DATA
+      // ==============================
+
       if (!data.user) {
         throw new Error(
           "User information was not received from the server."
@@ -63,9 +87,9 @@ function Login() {
         );
       }
 
-      // ==========================================
+      // ==============================
       // SAVE USER INFORMATION
-      // ==========================================
+      // ==============================
 
       localStorage.setItem(
         "user",
@@ -87,17 +111,25 @@ function Login() {
         data.user.id
       );
 
-      // Success message
-      setMessage("✅ Login successful!");
+      // ==============================
+      // SUCCESS
+      // ==============================
 
-      // ==========================================
+      setMessage(
+        "✅ Login successful!"
+      );
+
+      // ==============================
       // GO TO DASHBOARD
-      // ==========================================
+      // ==============================
 
       navigate("/dashboard");
 
     } catch (error) {
-      console.error("Login error:", error);
+      console.error(
+        "Login error:",
+        error
+      );
 
       setMessage(
         `❌ ${error.message}`
@@ -113,14 +145,14 @@ function Login() {
 
       <div className="login-card">
 
-        {/* ICON */}
+        {/* ================= ICON ================= */}
 
         <div className="login-icon">
           🛡️
         </div>
 
 
-        {/* TITLE */}
+        {/* ================= TITLE ================= */}
 
         <h1>
           AI Compliance Copilot
@@ -131,7 +163,7 @@ function Login() {
         </p>
 
 
-        {/* LOGIN FORM */}
+        {/* ================= LOGIN FORM ================= */}
 
         <form onSubmit={handleLogin}>
 
@@ -187,7 +219,7 @@ function Login() {
         </form>
 
 
-        {/* MESSAGE */}
+        {/* ================= MESSAGE ================= */}
 
         {message && (
           <p className="login-message">
@@ -196,14 +228,16 @@ function Login() {
         )}
 
 
-        {/* REGISTER */}
+        {/* ================= REGISTER ================= */}
 
         <p className="register-text">
+
           Don't have an account?{" "}
 
           <Link to="/register">
             Register
           </Link>
+
         </p>
 
       </div>
