@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import "./Reports.css";
 
 function Reports() {
+  const API_URL = "https://ai-compliance-copilot-pfq8.onrender.com";
+
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -30,7 +32,7 @@ function Reports() {
       const user = JSON.parse(storedUser);
 
       const response = await fetch(
-        `http://localhost:5000/reports/${user.id}`
+        `${API_URL}/reports/${user.id}`
       );
 
       const data = await response.json();
@@ -68,7 +70,7 @@ function Reports() {
       setDownloadingId(documentId);
 
       const response = await fetch(
-        `http://localhost:5000/reports/${user.id}/${documentId}/pdf`
+        `${API_URL}/reports/${user.id}/${documentId}/pdf`
       );
 
       if (!response.ok) {
