@@ -5,6 +5,8 @@ import "./Upload.css";
 function Upload() {
   const navigate = useNavigate();
 
+  const API_URL = "https://ai-compliance-copilot-pfq8.onrender.com";
+
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState("");
   const [uploading, setUploading] = useState(false);
@@ -31,7 +33,6 @@ function Upload() {
       setUploading(true);
       setMessage("🔍 Analyzing your document...");
 
-      
       const storedUser = localStorage.getItem("user");
 
       let user = null;
@@ -44,29 +45,25 @@ function Upload() {
         }
       }
 
-     
       const userId =
         user?.id ||
         user?.user_id ||
         user?.userId ||
         1;
 
-      
       const formData = new FormData();
 
       formData.append("document", file);
       formData.append("userId", userId);
 
-      
       const response = await fetch(
-        "http://localhost:5000/upload",
+        `${API_URL}/upload`,
         {
           method: "POST",
           body: formData,
         }
       );
 
-      
       const text = await response.text();
 
       let data;
@@ -89,13 +86,11 @@ function Upload() {
 
       console.log("Analysis result:", data);
 
-      
       const riskScore =
         data.riskScore ??
         data.risk_score ??
         0;
 
-     
       const reportData = {
         ...data,
         riskScore: riskScore,
@@ -160,7 +155,6 @@ function Upload() {
 
       </div>
 
-
       {/* Upload Card */}
 
       <div className="upload-card">
@@ -172,7 +166,6 @@ function Upload() {
         <h2>
           Upload & Analyze Documents
         </h2>
-
 
         {/* Drop Area */}
 
@@ -186,7 +179,6 @@ function Upload() {
             or
           </p>
 
-
           {/* File Input */}
 
           <input
@@ -195,7 +187,6 @@ function Upload() {
             accept=".pdf,.docx"
             onChange={handleFileChange}
           />
-
 
           {/* Selected File */}
 
@@ -206,7 +197,6 @@ function Upload() {
 
             </div>
           )}
-
 
           {/* Upload Button */}
 
@@ -222,7 +212,6 @@ function Upload() {
 
           </button>
 
-
           {/* Message */}
 
           {message && (
@@ -232,7 +221,6 @@ function Upload() {
           )}
 
         </div>
-
 
         {/* Supported Files */}
 
