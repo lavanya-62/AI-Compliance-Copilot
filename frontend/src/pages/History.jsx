@@ -11,6 +11,9 @@ function History() {
 
   const userId = localStorage.getItem("userId");
 
+  const API_URL =
+    "https://ai-compliance-copilot-pfq8.onrender.com";
+
   useEffect(() => {
     fetchHistory();
   }, []);
@@ -23,19 +26,26 @@ function History() {
       }
 
       const response = await fetch(
-        `http://localhost:5000/reports/${userId}`
+        `${API_URL}/reports/${userId}`
       );
 
       if (!response.ok) {
-        throw new Error("Failed to load compliance history");
+        throw new Error(
+          "Failed to load compliance history"
+        );
       }
 
       const data = await response.json();
 
+      console.log("Compliance history:", data);
+
       setReports(data.reports || []);
     } catch (error) {
       console.error("History error:", error);
-      setError("Unable to load compliance history.");
+
+      setError(
+        "Unable to load compliance history."
+      );
     } finally {
       setLoading(false);
     }
@@ -43,35 +53,65 @@ function History() {
 
   const downloadPDF = (documentId) => {
     window.open(
-      `http://localhost:5000/reports/${userId}/${documentId}/pdf`,
+      `${API_URL}/reports/${userId}/${documentId}/pdf`,
       "_blank"
     );
   };
 
   const getRiskClass = (risk) => {
-    if (risk === "High") return "history-risk high";
-    if (risk === "Medium") return "history-risk medium";
+    if (risk === "High") {
+      return "history-risk high";
+    }
+
+    if (risk === "Medium") {
+      return "history-risk medium";
+    }
+
     return "history-risk low";
   };
+
+  // ==============================
+  // LOADING
+  // ==============================
 
   if (loading) {
     return (
       <div className="history-page">
-        <h1>Compliance History</h1>
-        <p>Loading your compliance history...</p>
+
+        <h1>
+          Compliance History
+        </h1>
+
+        <p>
+          Loading your compliance history...
+        </p>
+
       </div>
     );
   }
 
+  // ==============================
+  // PAGE
+  // ==============================
+
   return (
     <div className="history-page">
 
+      {/* ================= HEADER ================= */}
+
       <div className="history-header">
+
         <div>
-          <h1>Compliance History</h1>
+
+          <h1>
+            Compliance History
+          </h1>
+
           <p>
-            View your previously analyzed compliance documents.
+            View your previously analyzed
+            compliance documents.
           </p>
+
         </div>
 
         <button
@@ -80,7 +120,11 @@ function History() {
         >
           + Analyze New Document
         </button>
+
       </div>
+
+
+      {/* ================= ERROR ================= */}
 
       {error && (
         <div className="history-error">
@@ -88,14 +132,23 @@ function History() {
         </div>
       )}
 
+
+      {/* ================= EMPTY HISTORY ================= */}
+
       {!error && reports.length === 0 && (
         <div className="empty-history">
-          <div className="empty-icon">📄</div>
 
-          <h2>No Compliance History</h2>
+          <div className="empty-icon">
+            📄
+          </div>
+
+          <h2>
+            No Compliance History
+          </h2>
 
           <p>
-            You have not analyzed any compliance documents yet.
+            You have not analyzed any
+            compliance documents yet.
           </p>
 
           <button
@@ -104,8 +157,12 @@ function History() {
           >
             Upload Your First Document
           </button>
+
         </div>
       )}
+
+
+      {/* ================= HISTORY LIST ================= */}
 
       {reports.length > 0 && (
         <div className="history-list">
@@ -117,6 +174,8 @@ function History() {
               key={report.id}
             >
 
+              {/* ================= DOCUMENT ================= */}
+
               <div className="history-document">
 
                 <div className="document-icon">
@@ -124,6 +183,7 @@ function History() {
                 </div>
 
                 <div>
+
                   <h2>
                     {report.original_name}
                   </h2>
@@ -139,27 +199,48 @@ function History() {
                         ).toLocaleString()
                       : "Date unavailable"}
                   </small>
+
                 </div>
 
               </div>
 
+
+              {/* ================= DETAILS ================= */}
+
               <div className="history-details">
 
+                {/* Score */}
+
                 <div className="history-score">
+
                   <strong>
-                    {Number(report.risk_score) || 0}%
+                    {Number(
+                      report.risk_score
+                    ) || 0}%
                   </strong>
 
                   <span>
                     Compliance Score
                   </span>
+
                 </div>
 
-                <div className={getRiskClass(report.risk_level)}>
-                  {report.risk_level} Risk
+
+                {/* Risk */}
+
+                <div
+                  className={getRiskClass(
+                    report.risk_level
+                  )}
+                >
+                  {report.risk_level || "Low"} Risk
                 </div>
+
+
+                {/* Findings */}
 
                 <div className="history-findings">
+
                   <strong>
                     {report.findings?.length || 0}
                   </strong>
@@ -167,9 +248,13 @@ function History() {
                   <span>
                     Findings
                   </span>
+
                 </div>
 
               </div>
+
+
+              {/* ================= ACTIONS ================= */}
 
               <div className="history-actions">
 
