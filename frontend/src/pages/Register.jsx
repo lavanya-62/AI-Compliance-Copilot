@@ -5,6 +5,8 @@ import "./Register.css";
 function Register() {
   const navigate = useNavigate();
 
+  const API_URL = "https://ai-compliance-copilot-pfq8.onrender.com";
+
   const [formData, setFormData] = useState({
     business: "",
     name: "",
@@ -42,7 +44,7 @@ function Register() {
       setMessage("");
 
       const response = await fetch(
-        "http://localhost:5000/auth/register",
+        `${API_URL}/auth/register`,
         {
           method: "POST",
           headers: {
@@ -58,7 +60,9 @@ function Register() {
         throw new Error(data.message || "Registration failed");
       }
 
-      setMessage("✅ Registration successful! Redirecting to login...");
+      setMessage(
+        "✅ Registration successful! Redirecting to login..."
+      );
 
       setTimeout(() => {
         navigate("/");
