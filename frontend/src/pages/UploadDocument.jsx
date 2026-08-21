@@ -3,6 +3,8 @@ import axios from "axios";
 import "./UploadDocument.css";
 
 function UploadDocument() {
+  const API_URL = "https://ai-compliance-copilot-pfq8.onrender.com";
+
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState("");
@@ -26,7 +28,7 @@ function UploadDocument() {
       setMessage("");
 
       const response = await axios.post(
-        "http://localhost:5000/upload",
+        `${API_URL}/upload`,
         formData
       );
 
