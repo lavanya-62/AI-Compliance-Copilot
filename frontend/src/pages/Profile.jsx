@@ -4,6 +4,8 @@ import "./Profile.css";
 function Profile() {
   const storedUser = JSON.parse(localStorage.getItem("user"));
 
+  const API_URL = "https://ai-compliance-copilot-pfq8.onrender.com";
+
   const [name, setName] = useState(storedUser?.name || "");
   const [email, setEmail] = useState(storedUser?.email || "");
   const [business, setBusiness] = useState(
@@ -35,7 +37,7 @@ function Profile() {
       }
 
       const response = await fetch(
-        `http://localhost:5000/reports/dashboard/${storedUser.id}`
+        `${API_URL}/reports/dashboard/${storedUser.id}`
       );
 
       if (!response.ok) {
@@ -74,7 +76,7 @@ function Profile() {
       setMessage("");
 
       const response = await fetch(
-        "http://localhost:5000/auth/profile",
+        `${API_URL}/auth/profile`,
         {
           method: "PUT",
           headers: {
