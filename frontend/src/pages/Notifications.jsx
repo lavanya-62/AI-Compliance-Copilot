@@ -6,6 +6,8 @@ function Notifications() {
 
   const userId = localStorage.getItem("userId");
 
+  const API_URL = "https://ai-compliance-copilot-pfq8.onrender.com";
+
   useEffect(() => {
     fetchNotifications();
   }, []);
@@ -19,7 +21,7 @@ function Notifications() {
       }
 
       const response = await fetch(
-        `http://localhost:5000/reports/${userId}`
+        `${API_URL}/reports/${userId}`
       );
 
       if (!response.ok) {
@@ -39,27 +41,27 @@ function Notifications() {
         return;
       }
 
+      // Latest analyzed report
       const latestReport = data.reports[0];
 
-      const findings = latestReport.findings || [];
+      const findings = Array.isArray(latestReport.findings)
+        ? latestReport.findings
+        : [];
 
       const generatedNotifications = findings.map(
         (finding, index) => ({
-          id: index + 1,
-          title: finding.issue,
-          description: finding.recommendation,
-          severity: finding.severity,
+          id: `${latestReport.id}-${index}`,
+          title: finding.issue || "Compliance issue detected",
+          description:
+            finding.recommendation ||
+            "Review this compliance requirement.",
+          severity: finding.severity || "Low",
         })
       );
 
       setNotifications(generatedNotifications);
-
     } catch (error) {
-      console.error(
-        "Notifications error:",
-        error
-      );
-
+      console.error("Notifications error:", error);
       setNotifications([]);
     } finally {
       setLoading(false);
@@ -76,8 +78,7 @@ function Notifications() {
         <h1>Notifications</h1>
 
         <p>
-          Stay updated with important compliance
-          alerts.
+          Stay updated with important compliance alerts.
         </p>
 
         <div className="notifications-container">
@@ -96,16 +97,13 @@ function Notifications() {
   if (notifications.length === 0) {
     return (
       <div className="notifications-page">
-
         <h1>Notifications</h1>
 
         <p>
-          Stay updated with important compliance
-          alerts.
+          Stay updated with important compliance alerts.
         </p>
 
         <div className="notifications-container">
-
           <h2>🔔 Compliance Notifications</h2>
 
           <div className="notification-card success">
@@ -117,14 +115,12 @@ function Notifications() {
               <h3>No Compliance Alerts</h3>
 
               <p>
-                No compliance issues were found in
-                your latest analyzed document.
+                No compliance issues were found in your
+                latest analyzed document.
               </p>
             </div>
           </div>
-
         </div>
-
       </div>
     );
   }
@@ -135,63 +131,56 @@ function Notifications() {
 
   return (
     <div className="notifications-page">
-
       <h1>Notifications</h1>
 
       <p>
-        Stay updated with important compliance
-        alerts.
+        Stay updated with important compliance alerts.
       </p>
 
       <div className="notifications-container">
-
         <h2>🔔 Compliance Notifications</h2>
 
-        {notifications.map((notification) => (
+        {notifications.map((notification) => {
+          const severity =
+            notification.severity?.toLowerCase();
 
-          <div
-            key={notification.id}
-            className={`notification-card ${
-              notification.severity?.toLowerCase() ===
-              "high"
-                ? "high"
-                : notification.severity?.toLowerCase() ===
-                  "medium"
-                ? "warning"
-                : "low"
-            }`}
-          >
+          let cardClass = "low";
+          let icon = "🟢";
 
-            <div className="notification-icon">
-              {notification.severity === "High"
-                ? "🔴"
-                : notification.severity === "Medium"
-                ? "🟠"
-                : "🟢"}
+          if (severity === "high") {
+            cardClass = "high";
+            icon = "🔴";
+          } else if (severity === "medium") {
+            cardClass = "warning";
+            icon = "🟠";
+          }
+
+          return (
+            <div
+              key={notification.id}
+              className={`notification-card ${cardClass}`}
+            >
+              <div className="notification-icon">
+                {icon}
+              </div>
+
+              <div>
+                <h3>
+                  {notification.title}
+                </h3>
+
+                <p>
+                  {notification.description}
+                </p>
+
+                <span className="severity">
+                  {notification.severity} Risk
+                </span>
+              </div>
             </div>
-
-            <div>
-
-              <h3>
-                {notification.title}
-              </h3>
-
-              <p>
-                {notification.description}
-              </p>
-
-              <span className="severity">
-                {notification.severity} Risk
-              </span>
-
-            </div>
-
-          </div>
-
-        ))}
-
+          );
+        })}
       </div>
-
     </div>
   );
 }
