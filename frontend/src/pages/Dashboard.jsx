@@ -7,7 +7,8 @@ function Dashboard() {
 
   const userId = localStorage.getItem("userId");
 
-  const API_URL = "https://ai-compliance-copilot-pfq8.onrender.com";
+  
+  const API_URL =   "https://ai-compliance-copilot-pfq8.onrender.com";
 
   useEffect(() => {
     fetchData();
@@ -21,19 +22,24 @@ function Dashboard() {
         return;
       }
 
+      console.log("Fetching dashboard for user:", userId);
+
       const response = await fetch(
         `${API_URL}/reports/dashboard/${userId}`
       );
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch dashboard data");
-      }
-
       const result = await response.json();
 
-      console.log("Dashboard data:", result);
+      console.log("Dashboard response:", result);
+
+      if (!response.ok) {
+        throw new Error(
+          result.message || "Failed to fetch dashboard data"
+        );
+      }
 
       setData(result);
+
     } catch (error) {
       console.error("Dashboard error:", error);
       setData(null);
@@ -42,9 +48,7 @@ function Dashboard() {
     }
   };
 
-  // ==============================
-  // LOADING
-  // ==============================
+  
 
   if (loading) {
     return (
@@ -54,15 +58,12 @@ function Dashboard() {
     );
   }
 
-  // ==============================
-  // NO DATA
-  // ==============================
+  
 
   if (!data || !data.latestDocument) {
     return (
       <div className="dashboard-page">
 
-        {/* Header */}
         <div className="dashboard-header">
           <div>
             <h1>Dashboard</h1>
@@ -77,7 +78,6 @@ function Dashboard() {
           </div>
         </div>
 
-        {/* Overview */}
         <h2>AI Compliance Overview</h2>
 
         <div className="stats-grid">
@@ -92,7 +92,6 @@ function Dashboard() {
             </span>
           </div>
 
-
           <div className="stat-card">
             <p>Risk Level</p>
 
@@ -103,7 +102,6 @@ function Dashboard() {
             </span>
           </div>
 
-
           <div className="stat-card">
             <p>Documents Checked</p>
 
@@ -113,7 +111,6 @@ function Dashboard() {
               AI analyzed documents
             </span>
           </div>
-
 
           <div className="stat-card">
             <p>Issues Found</p>
@@ -127,8 +124,6 @@ function Dashboard() {
 
         </div>
 
-
-        {/* Risk Breakdown */}
         <div className="dashboard-section">
 
           <h2>Risk Breakdown</h2>
@@ -136,7 +131,6 @@ function Dashboard() {
           <div className="risk-grid">
 
             <div className="risk-card high">
-
               <strong>
                 🔴 High Risk: 0
               </strong>
@@ -144,12 +138,9 @@ function Dashboard() {
               <p>
                 High-severity compliance issues detected.
               </p>
-
             </div>
 
-
             <div className="risk-card medium">
-
               <strong>
                 🟠 Medium Risk: 0
               </strong>
@@ -157,12 +148,9 @@ function Dashboard() {
               <p>
                 Medium-severity issues that need attention.
               </p>
-
             </div>
 
-
             <div className="risk-card low">
-
               <strong>
                 🟢 Low Risk: 0
               </strong>
@@ -170,15 +158,12 @@ function Dashboard() {
               <p>
                 Low-severity compliance issues detected.
               </p>
-
             </div>
 
           </div>
 
         </div>
 
-
-        {/* Recent Activity */}
         <div className="dashboard-section">
 
           <h2>
@@ -203,10 +188,7 @@ function Dashboard() {
     );
   }
 
-
-  // ==============================
-  // LATEST DOCUMENT DATA
-  // ==============================
+  
 
   const document = data.latestDocument;
 
@@ -231,15 +213,9 @@ function Dashboard() {
   const riskLevel =
     data.riskLevel || "No Data";
 
-
-  // ==============================
-  // DASHBOARD
-  // ==============================
-
+ 
   return (
     <div className="dashboard-page">
-
-      {/* ================= HEADER ================= */}
 
       <div className="dashboard-header">
 
@@ -261,17 +237,11 @@ function Dashboard() {
 
       </div>
 
-
-      {/* ================= OVERVIEW ================= */}
-
       <h2>
         AI Compliance Overview
       </h2>
 
-
       <div className="stats-grid">
-
-        {/* Compliance Score */}
 
         <div className="stat-card">
 
@@ -289,9 +259,6 @@ function Dashboard() {
 
         </div>
 
-
-        {/* Risk Level */}
-
         <div className="stat-card">
 
           <p>
@@ -308,9 +275,6 @@ function Dashboard() {
 
         </div>
 
-
-        {/* Documents Checked */}
-
         <div className="stat-card">
 
           <p>
@@ -326,9 +290,6 @@ function Dashboard() {
           </span>
 
         </div>
-
-
-        {/* Issues Found */}
 
         <div className="stat-card">
 
@@ -348,9 +309,6 @@ function Dashboard() {
 
       </div>
 
-
-      {/* ================= RISK BREAKDOWN ================= */}
-
       <div className="dashboard-section">
 
         <h2>
@@ -358,8 +316,6 @@ function Dashboard() {
         </h2>
 
         <div className="risk-grid">
-
-          {/* High Risk */}
 
           <div className="risk-card high">
 
@@ -373,9 +329,6 @@ function Dashboard() {
 
           </div>
 
-
-          {/* Medium Risk */}
-
           <div className="risk-card medium">
 
             <strong>
@@ -387,9 +340,6 @@ function Dashboard() {
             </p>
 
           </div>
-
-
-          {/* Low Risk */}
 
           <div className="risk-card low">
 
@@ -407,17 +357,11 @@ function Dashboard() {
 
       </div>
 
-
-      {/* ================= RECENT ACTIVITY ================= */}
-
       <div className="dashboard-section">
 
         <h2>
           Recent Compliance Activity
         </h2>
-
-
-        {/* Document */}
 
         <div className="activity success">
 
@@ -430,9 +374,6 @@ function Dashboard() {
           </p>
 
         </div>
-
-
-        {/* Score */}
 
         <div className="activity success">
 
@@ -447,13 +388,9 @@ function Dashboard() {
 
         </div>
 
-
-        {/* Findings */}
-
         {data.findings &&
           data.findings.length > 0 && (
             <>
-
               {data.findings.map(
                 (finding, index) => (
 
@@ -474,7 +411,6 @@ function Dashboard() {
 
                 )
               )}
-
             </>
           )}
 

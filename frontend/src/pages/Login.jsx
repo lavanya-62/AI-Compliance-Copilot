@@ -10,42 +10,29 @@ function Login() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const API_URL =
-    "https://ai-compliance-copilot-pfq8.onrender.com";
+  
+  const API_URL = "https://ai-compliance-copilot-pfq8.onrender.com";
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Clear previous message
     setMessage("");
 
-    // ==============================
-    // VALIDATION
-    // ==============================
-
     if (!email.trim() || !password.trim()) {
-      setMessage(
-        "⚠️ Please enter email and password."
-      );
+      setMessage("⚠️ Please enter email and password.");
       return;
     }
 
     try {
       setLoading(true);
 
-      // ==============================
-      // LOGIN API
-      // ==============================
-
       const response = await fetch(
         `${API_URL}/auth/login`,
         {
           method: "POST",
-
           headers: {
             "Content-Type": "application/json",
           },
-
           body: JSON.stringify({
             email: email.trim(),
             password,
@@ -55,25 +42,13 @@ function Login() {
 
       const data = await response.json();
 
-      console.log(
-        "Login response:",
-        data
-      );
-
-      // ==============================
-      // LOGIN FAILED
-      // ==============================
+      console.log("Login response:", data);
 
       if (!response.ok) {
         throw new Error(
-          data.message ||
-            "Invalid email or password."
+          data.message || "Invalid email or password."
         );
       }
-
-      // ==============================
-      // CHECK USER DATA
-      // ==============================
 
       if (!data.user) {
         throw new Error(
@@ -87,10 +62,6 @@ function Login() {
         );
       }
 
-      // ==============================
-      // SAVE USER INFORMATION
-      // ==============================
-
       localStorage.setItem(
         "user",
         JSON.stringify(data.user)
@@ -101,39 +72,17 @@ function Login() {
         String(data.user.id)
       );
 
-      console.log(
-        "Logged in user:",
-        data.user
-      );
+      console.log("Logged in user:", data.user);
+      console.log("Saved userId:", data.user.id);
 
-      console.log(
-        "Saved userId:",
-        data.user.id
-      );
-
-      // ==============================
-      // SUCCESS
-      // ==============================
-
-      setMessage(
-        "✅ Login successful!"
-      );
-
-      // ==============================
-      // GO TO DASHBOARD
-      // ==============================
+      setMessage("✅ Login successful!");
 
       navigate("/dashboard");
 
     } catch (error) {
-      console.error(
-        "Login error:",
-        error
-      );
+      console.error("Login error:", error);
 
-      setMessage(
-        `❌ ${error.message}`
-      );
+      setMessage(`❌ ${error.message}`);
 
     } finally {
       setLoading(false);
@@ -145,14 +94,9 @@ function Login() {
 
       <div className="login-card">
 
-        {/* ================= ICON ================= */}
-
         <div className="login-icon">
           🛡️
         </div>
-
-
-        {/* ================= TITLE ================= */}
 
         <h1>
           AI Compliance Copilot
@@ -162,12 +106,7 @@ function Login() {
           Compliance made simple for MSMEs
         </p>
 
-
-        {/* ================= LOGIN FORM ================= */}
-
         <form onSubmit={handleLogin}>
-
-          {/* EMAIL */}
 
           <label htmlFor="email">
             Email
@@ -185,9 +124,6 @@ function Login() {
             disabled={loading}
           />
 
-
-          {/* PASSWORD */}
-
           <label htmlFor="password">
             Password
           </label>
@@ -204,9 +140,6 @@ function Login() {
             disabled={loading}
           />
 
-
-          {/* LOGIN BUTTON */}
-
           <button
             type="submit"
             disabled={loading}
@@ -218,26 +151,17 @@ function Login() {
 
         </form>
 
-
-        {/* ================= MESSAGE ================= */}
-
         {message && (
           <p className="login-message">
             {message}
           </p>
         )}
 
-
-        {/* ================= REGISTER ================= */}
-
         <p className="register-text">
-
           Don't have an account?{" "}
-
           <Link to="/register">
             Register
           </Link>
-
         </p>
 
       </div>

@@ -87,12 +87,12 @@ router.post("/login", (req, res) => {
 
   db.query(sql, [email], (err, results) => {
     if (err) {
-      console.error(err);
+  console.error("❌ LOGIN DATABASE ERROR:", err);
 
-      return res.status(500).json({
-        message: "Database error",
-      });
-    }
+  return res.status(500).json({
+    message: err.message,
+  });
+}
 
     if (results.length === 0) {
       return res.status(401).json({
